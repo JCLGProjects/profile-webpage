@@ -25,16 +25,6 @@ const styles = theme => ({
     root: {
         display: 'flex',
     },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
@@ -54,54 +44,49 @@ const styles = theme => ({
         marginLeft: 12,
         marginRight: 36,
     },
-    menuButtonHidden: {
+    hide: {
         display: 'none',
     },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
         whiteSpace: 'nowrap',
+    },
+    drawerOpen: {
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
-    drawerPaperClose: {
-        overflowX: 'hidden',
+    drawerClose: {
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 7,
+        overflowX: 'hidden',
+        width: theme.spacing.unit * 7 + 1,
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
+            width: theme.spacing.unit * 9 + 1,
         },
     },
-    appBarSpacer: theme.mixins.toolbar,
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    chartContainer: {
-        marginLeft: -22,
-    },
-    tableContainer: {
-        height: 320,
-    },
-    h5: {
-        marginBottom: theme.spacing.unit * 2,
     },
 });
 
 class MiniVariantDrawer extends React.Component {
 
     state = {
-        open: true,
+        open: false,
     };
 
     handleDrawerOpen = () => {
@@ -115,6 +100,8 @@ class MiniVariantDrawer extends React.Component {
     render() {
 
         const {classes, theme} = this.props;
+
+        const drawerTitle = "Johan Camilo López"
 
         return (
             <div className={classes.root}>
@@ -137,7 +124,7 @@ class MiniVariantDrawer extends React.Component {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Mini variant drawer
+                            {drawerTitle}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -191,4 +178,4 @@ MiniVariantDrawer.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MiniVariantDrawer);
+export default withStyles(styles, {withTheme: true})(MiniVariantDrawer);
